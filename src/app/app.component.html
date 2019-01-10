@@ -1,21 +1,1278 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-
-<router-outlet></router-outlet>
+<div class="row">
+    <div class="col-sm-4" [formGroup]="details">
+      <div formGroupName="origin">
+        <label class="input-field-upper-label"> <span>Origin<a href="#"></a></span></label>
+        <div class="form-group">
+          <input type="text" class="m-10" formControlName="origin" value="">Origin
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4" [formGroup]="details">
+      <div formGroupName="destination">
+        <label class="input-field-upper-label"> <span>Destination<a href="#"></a></span></label>
+        <div class="form-group">
+          <input type="text" class="m-10" formControlName="destination" value="">Destination
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label for="Shipment Type">Select Shipment Type</label>
+        <select [(ngModel)]="shipmentType" id="shipmentType">
+        <option value="" disabled selected>Select a Shipment Type</option>
+        <option *ngFor="let item of options" [value]="item.id">{{item.displayName}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="page-content-container container" *ngIf="shipmentType">
+    <div class="form-content stepped-search">
+      <form *ngIf="shipmentType === 'fcl'" [formGroup]="fcl">
+      <div id="loads" class="multiple">
+        <div class="tabs">
+          <div class="tab-items" style="padding-left: 0px;">
+            <div class="tab-wrapper">
+            </div>
+            <div class="tab-wrapper">
+            </div>
+            <em class="tab-highlighter" style="width: 236px; margin-left: 0px;"></em>
+          </div>
+          <div class="tabs-content" *ngFor="let school of fcl.controls['fcl'].controls; let i=index">
+            <div class="card step-card">
+              <div class="card-header">
+                <label class="card-title-label">
+                  <div>
+                    <div class="step-number">1</div>
+                    <div class="step-title main-icon" *ngIf="fcl.controls['fcl'].controls.length > 1" (click)="removeFCL(i)" data-type="svg">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 482.428 482.429" style="enable-background:new 0 0 482.428 482.429;" xml:space="preserve">
+                      <g>
+                        <g>
+                          <path d="M381.163,57.799h-75.094C302.323,25.316,274.686,0,241.214,0c-33.471,0-61.104,25.315-64.85,57.799h-75.098 c-30.39,0-55.111,24.728-55.111,55.117v2.828c0,23.223,14.46,43.1,34.83,51.199v260.369c0,30.39,24.724,55.117,55.112,55.117 h210.236c30.389,0,55.111-24.729,55.111-55.117V166.944c20.369-8.1,34.83-27.977,34.83-51.199v-2.828 C436.274,82.527,411.551,57.799,381.163,57.799z M241.214,26.139c19.037,0,34.927,13.645,38.443,31.66h-76.879 C206.293,39.783,222.184,26.139,241.214,26.139z M375.305,427.312c0,15.978-13,28.979-28.973,28.979H136.096 c-15.973,0-28.973-13.002-28.973-28.979V170.861h268.182V427.312z M410.135,115.744c0,15.978-13,28.979-28.973,28.979H101.266 c-15.973,0-28.973-13.001-28.973-28.979v-2.828c0-15.978,13-28.979,28.973-28.979h279.897c15.973,0,28.973,13.001,28.973,28.979 V115.744z"></path>
+                          <path d="M171.144,422.863c7.218,0,13.069-5.853,13.069-13.068V262.641c0-7.216-5.852-13.07-13.069-13.07 c-7.217,0-13.069,5.854-13.069,13.07v147.154C158.074,417.012,163.926,422.863,171.144,422.863z"></path>
+                          <path d="M241.214,422.863c7.218,0,13.07-5.853,13.07-13.068V262.641c0-7.216-5.854-13.07-13.07-13.07 c-7.217,0-13.069,5.854-13.069,13.07v147.154C228.145,417.012,233.996,422.863,241.214,422.863z"></path>
+                          <path d="M311.284,422.863c7.217,0,13.068-5.853,13.068-13.068V262.641c0-7.216-5.852-13.07-13.068-13.07 c-7.219,0-13.07,5.854-13.07,13.07v147.154C298.213,417.012,304.067,422.863,311.284,422.863z"></path>
+                        </g>
+                      </g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                    </svg>
+                  </div>
+                  <div class="step-title">Shipping Full Container Load - {{ i+1}} </div>
+              </div>
+              </label>
+            </div>
+            <div class="card-block">
+              <div class="looseCargoWrapper">
+                <div>
+                  <div class="lclWrapper">
+                    <div class="row loadUnit-row vcenter">
+                      <div class="col-sm-15" formArrayName="fcl">
+                        <div>
+                          <div formGroupName="{{i}}">
+                            <div class="load-unit no-gutter row">
+                              <div class="quantity-wrapper col-sm-5">
+                                <div>
+                                  <label class="input-field-upper-label"> <span>Description of FCL<a href="#"></a></span></label>
+                                  <div class="form-group Select">
+                                    <input type="text" class="form-control" placeholder="Description" formControlName="description" />
+                                    <small [hidden]="fcl.controls.fcl.controls[i].controls.description.valid" class="text-danger">
+                                    Description is required.
+                                    </small>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div>
+                                  <label class="input-field-upper-label"> <span>Container Type <a href="#"></a></span></label>
+                                  <div class="form-group">
+                                    <select class="form-control" id="container_type" formControlName="container_type">
+                                      <option>20SD</option>
+                                      <option>20OT</option>
+                                      <option>40HT</option>
+                                      <option>40DV</option>
+                                      <option>20GP</option>
+                                      <option>20DC</option>
+                                      <option>45HC</option>
+                                      <option>40TK</option>
+                                      <option>40RF</option>
+                                      <option>40OT</option>
+                                      <option>40HD</option>
+                                      <option>40HC</option>
+                                      <option>40GP</option>
+                                      <option>40FR</option>
+                                      <option>20TK</option>
+                                      <option>20T4</option>
+                                      <option>20T3</option>
+                                      <option>20RF</option>
+                                      <option>20OT</option>
+                                      <option>20HD</option>
+                                      <option>20HC</option>
+                                      <option>20GP</option>
+                                      <option>20FT</option>
+                                      <option>20FR</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div>
+                                  <label class="input-field-upper-label"> <span>Container Count<a href="#"></a></span></label>
+                                  <div class="form-group Select">
+                                    <input type="text" class="form-control" placeholder="Container Count" formControlName="container_count" />
+                                    <small [hidden]="fcl.controls.fcl.controls[i].controls.container_count.valid" class="text-danger">
+                                    Container Count is required.
+                                    </small>
+                                  </div>
+                                </div>
+                                <div class="weight-input-label"></div>
+                              </div>
+                              <div class="col-sm-1">
+                                <div class="load-totals-wrapper load-margin-top">
+                                  <div class="unit">1 Unit</div>
+                                  <div class="volume">0CBM</div>
+                                  <div class="weight">0KG</div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="load-unit no-gutter row">
+                              <div class="quantity-wrapper col-sm-3">
+                                <div>
+                                  <label class="input-field-upper-label"> <span>Weight Unit <a href="#">Help</a></span></label>
+                                  <div class="form-group">
+                                    <select class="form-control" id="sel1" formControlName="weight_unit">
+                                      <option>KG</option>
+                                      <option>LB</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div>
+                                  <label class="input-field-upper-label"> <span>Gross Weight <a href="#">Help</a></span></label>
+                                  <div class="form-group Select">
+                                    <input type="text" class="form-control" placeholder="Gross Weight" formControlName="gross_weight" />
+                                    <small [hidden]="fcl.controls.fcl.controls[i].controls.gross_weight.valid" class="text-danger">
+                                    Gross Weight is required.
+                                    </small>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div>
+                                  <label class="input-field-upper-label"> <span>Net Weight <a href="#">Help</a></span></label>
+                                  <div class="form-group Select">
+                                    <input type="text" class="form-control" placeholder="Net Weight" formControlName="net_weight" />
+                                    <small [hidden]="fcl.controls.fcl.controls[i].controls.net_weight.valid" class="text-danger">
+                                    Net Weight is required.
+                                    </small>
+                                  </div>
+                                </div>
+                                <div class="weight-input-label"></div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div>
+                                  <label class="input-field-upper-label"> <span>CBM <a href="#">Don’t know them?</a></span></label>
+                                  <div class="form-group Select">
+                                    <input type="text" class="form-control" placeholder="CBM" formControlName="cbm" />
+                                    <small [hidden]="fcl.controls.fcl.controls[i].controls.cbm.valid" class="text-danger">
+                                    CBM is required.
+                                    </small>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="load-remove-wizard load-margin-top col-sm-1"></div>
+                    </div>
+                    <div>
+                      <hr style="border-width: 1px 0px 0px; border-top-style: solid; border-right-style: initial; border-bottom-style: initial; border-left-style: initial; border-top-color: rgb(197, 217, 232); border-right-color: initial; border-bottom-color: initial; border-left-color: initial; border-image: initial; margin: 10px -16px; padding: 0px;">
+                    </div>
+                    <div class="vcenter add-load row">
+                      <div class="col-sm-9" (click)="addFCL()" style="cursor: pointer;"><span class="icon icon-circle-add"></span><a>Add another unit</a></div>
+                      <div class="shipment-lcl-total-label-ld col-sm-3">Shipment total:</div>
+                      <div class="col-sm-3"><span class="load-summary">1 Unit, 0 CBM, 0 KG</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button (click)="nextStep('two')" label="Button" type="button" class="next-step-button btn btn-primary"><span><span class="bold">NEXT STEP</span></span>
+      </button>
+    </div>
+    </form>
+    <form *ngIf="shipmentType === 'lcl'" [formGroup]="lcl">
+    <div id="loads" class="multiple">
+      <div class="tabs">
+        <div class="tab-items" style="padding-left: 0px;">
+          <div class="tab-wrapper">
+          </div>
+          <div class="tab-wrapper">
+          </div>
+          <em class="tab-highlighter" style="width: 236px; margin-left: 0px;"></em>
+        </div>
+        <div class="tabs-content" *ngFor="let school of lcl.controls['lcl'].controls; let i=index">
+          <div class="card step-card">
+            <div class="card-header">
+              <label class="card-title-label">
+                <div>
+                  <div class="step-number">1</div>
+                  <div class="step-title main-icon" *ngIf="lcl.controls['lcl'].controls.length > 1" (click)="removeLCL(i)" data-type="svg">
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 482.428 482.429" style="enable-background:new 0 0 482.428 482.429;" xml:space="preserve">
+                    <g>
+                      <g>
+                        <path d="M381.163,57.799h-75.094C302.323,25.316,274.686,0,241.214,0c-33.471,0-61.104,25.315-64.85,57.799h-75.098 c-30.39,0-55.111,24.728-55.111,55.117v2.828c0,23.223,14.46,43.1,34.83,51.199v260.369c0,30.39,24.724,55.117,55.112,55.117 h210.236c30.389,0,55.111-24.729,55.111-55.117V166.944c20.369-8.1,34.83-27.977,34.83-51.199v-2.828 C436.274,82.527,411.551,57.799,381.163,57.799z M241.214,26.139c19.037,0,34.927,13.645,38.443,31.66h-76.879 C206.293,39.783,222.184,26.139,241.214,26.139z M375.305,427.312c0,15.978-13,28.979-28.973,28.979H136.096 c-15.973,0-28.973-13.002-28.973-28.979V170.861h268.182V427.312z M410.135,115.744c0,15.978-13,28.979-28.973,28.979H101.266 c-15.973,0-28.973-13.001-28.973-28.979v-2.828c0-15.978,13-28.979,28.973-28.979h279.897c15.973,0,28.973,13.001,28.973,28.979 V115.744z"></path>
+                        <path d="M171.144,422.863c7.218,0,13.069-5.853,13.069-13.068V262.641c0-7.216-5.852-13.07-13.069-13.07 c-7.217,0-13.069,5.854-13.069,13.07v147.154C158.074,417.012,163.926,422.863,171.144,422.863z"></path>
+                        <path d="M241.214,422.863c7.218,0,13.07-5.853,13.07-13.068V262.641c0-7.216-5.854-13.07-13.07-13.07 c-7.217,0-13.069,5.854-13.069,13.07v147.154C228.145,417.012,233.996,422.863,241.214,422.863z"></path>
+                        <path d="M311.284,422.863c7.217,0,13.068-5.853,13.068-13.068V262.641c0-7.216-5.852-13.07-13.068-13.07 c-7.219,0-13.07,5.854-13.07,13.07v147.154C298.213,417.012,304.067,422.863,311.284,422.863z"></path>
+                      </g>
+                    </g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                  </svg>
+                </div>
+                <div class="step-title">Shipping Full Container Load - {{ i+1}} </div>
+            </div>
+            </label>
+          </div>
+          <div class="card-block">
+            <div class="looseCargoWrapper">
+              <div>
+                <div class="lclWrapper">
+                  <div class="row loadUnit-row vcenter">
+                    <div class="col-sm-15" formArrayName="lcl">
+                      <div>
+                        <div formGroupName="{{i}}">
+                          <div class="load-unit no-gutter row">
+                            <div class="quantity-wrapper col-sm-5">
+                              <div>
+                                <label class="input-field-upper-label"> <span>Description of LCL<a href="#"></a></span></label>
+                                <div class="form-group Select">
+                                  <input type="text" class="form-control" placeholder="Description" formControlName="description" />
+                                  <small [hidden]="lcl.controls.lcl.controls[i].controls.description.valid" class="text-danger">
+                                  Description is required.
+                                  </small>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div>
+                                <label class="input-field-upper-label"> <span>Package Type <a href="#"></a></span></label>
+                                <div class="form-group">
+                                  <select class="form-control" id="package_type" formControlName="package_type">
+                                    <option>IBC TANKS(S)</option>
+                                    <option>BOXES</option>
+                                    <option>COLLI</option>
+                                    <option>CRATE</option>
+                                    <option>ROLLS</option>
+                                    <option>REELS</option>
+                                    <option>SKID(S)</option>
+                                    <option>PIECES(S)</option>
+                                    <option>PALLETS</option>
+                                    <option>PACKAGES(S)</option>
+                                    <option>COIL(S)</option>
+                                    <option>DRUMS</option>
+                                    <option>CASE(S)</option>
+                                    <option>CARTONS</option>
+                                    <option>CARBOY(S)</option>
+                                    <option>CAN(S)</option>
+                                    <option>CABLE DRUM(S)</option>
+                                    <option>BUNDLE(S)</option>
+                                    <option>BRIQUETTE(S)</option>
+                                    <option>BOX(S)</option>
+                                    <option>BOBBIN(S)</option>
+                                    <option>BOAT(S)</option>
+                                    <option>BLOCKS(S)</option>
+                                    <option>BARREL(S)</option>
+                                    <option>BALE(S)</option>
+                                    <option>BAILS</option>
+                                    <option>BAG(S)</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div>
+                                <label class="input-field-upper-label"> <span>Package Count<a href="#"></a></span></label>
+                                <div class="form-group Select">
+                                  <input type="text" class="form-control" placeholder="Package Count" formControlName="package_quantity" />
+                                  <small [hidden]="lcl.controls.lcl.controls[i].controls.package_quantity.valid" class="text-danger">
+                                  Container Count is required.
+                                  </small>
+                                </div>
+                              </div>
+                              <div class="weight-input-label"></div>
+                            </div>
+                            <div class="col-sm-1">
+                              <div class="load-totals-wrapper load-margin-top">
+                                <div class="unit">1 Unit</div>
+                                <div class="volume">0CBM</div>
+                                <div class="weight">0KG</div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="load-unit no-gutter row">
+                            <div class="quantity-wrapper col-sm-3">
+                              <div>
+                                <label class="input-field-upper-label"> <span>Weight Unit <a href="#">Help</a></span></label>
+                                <div class="form-group">
+                                  <select class="form-control" id="sel1" formControlName="weight_unit">
+                                    <option>KG</option>
+                                    <option>LB</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div>
+                                <label class="input-field-upper-label"> <span>Gross Weight <a href="#">Help</a></span></label>
+                                <div class="form-group Select">
+                                  <input type="text" class="form-control" placeholder="Gross Weight" formControlName="gross_weight" />
+                                  <small [hidden]="lcl.controls.lcl.controls[i].controls.gross_weight.valid" class="text-danger">
+                                  Gross Weight is required.
+                                  </small>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div>
+                                <label class="input-field-upper-label"> <span>Net Weight <a href="#">Help</a></span></label>
+                                <div class="form-group Select">
+                                  <input type="text" class="form-control" placeholder="Net Weight" formControlName="net_weight" />
+                                  <small [hidden]="lcl.controls.lcl.controls[i].controls.net_weight.valid" class="text-danger">
+                                  Net Weight is required.
+                                  </small>
+                                </div>
+                              </div>
+                              <div class="weight-input-label"></div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div>
+                                <label class="input-field-upper-label"> <span>CBM <a href="#">Don’t know them?</a></span></label>
+                                <div class="form-group Select">
+                                  <input type="text" class="form-control" placeholder="CBM" formControlName="cbm" />
+                                  <small [hidden]="lcl.controls.lcl.controls[i].controls.cbm.valid" class="text-danger">
+                                  CBM is required.
+                                  </small>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="load-remove-wizard load-margin-top col-sm-1"></div>
+                  </div>
+                  <div>
+                    <hr style="border-width: 1px 0px 0px; border-top-style: solid; border-right-style: initial; border-bottom-style: initial; border-left-style: initial; border-top-color: rgb(197, 217, 232); border-right-color: initial; border-bottom-color: initial; border-left-color: initial; border-image: initial; margin: 10px -16px; padding: 0px;">
+                  </div>
+                  <div class="vcenter add-load row">
+                    <div class="col-sm-9" (click)="addLCL()" style="cursor: pointer;"><span class="icon icon-circle-add"></span><a>Add another unit</a></div>
+                    <div class="shipment-lcl-total-label-ld col-sm-3">Shipment total:</div>
+                    <div class="col-sm-3"><span class="load-summary">1 Unit, 0 CBM, 0 KG</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button label="Button" type="button" class="next-step-button btn btn-primary"><span><span class="bold">NEXT STEP</span></span>
+    </button>
+  </div>
+  </form>
+  <form *ngIf="shipmentType === 'air'" [formGroup]="air">
+  <div id="loads" class="multiple">
+    <div class="tabs">
+      <div class="tab-items" style="padding-left: 0px;">
+        <div class="tab-wrapper">
+        </div>
+        <div class="tab-wrapper">
+        </div>
+        <em class="tab-highlighter" style="width: 236px; margin-left: 0px;"></em>
+      </div>
+      <div class="tabs-content" *ngFor="let school of air.controls['air'].controls; let i=index">
+        <div class="card step-card">
+          <div class="card-header">
+            <label class="card-title-label">
+              <div>
+                <div class="step-number">1</div>
+                <div class="step-title main-icon" *ngIf="air.controls['air'].controls.length > 1" (click)="removeAir(i)" data-type="svg">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 482.428 482.429" style="enable-background:new 0 0 482.428 482.429;" xml:space="preserve">
+                  <g>
+                    <g>
+                      <path d="M381.163,57.799h-75.094C302.323,25.316,274.686,0,241.214,0c-33.471,0-61.104,25.315-64.85,57.799h-75.098 c-30.39,0-55.111,24.728-55.111,55.117v2.828c0,23.223,14.46,43.1,34.83,51.199v260.369c0,30.39,24.724,55.117,55.112,55.117 h210.236c30.389,0,55.111-24.729,55.111-55.117V166.944c20.369-8.1,34.83-27.977,34.83-51.199v-2.828 C436.274,82.527,411.551,57.799,381.163,57.799z M241.214,26.139c19.037,0,34.927,13.645,38.443,31.66h-76.879 C206.293,39.783,222.184,26.139,241.214,26.139z M375.305,427.312c0,15.978-13,28.979-28.973,28.979H136.096 c-15.973,0-28.973-13.002-28.973-28.979V170.861h268.182V427.312z M410.135,115.744c0,15.978-13,28.979-28.973,28.979H101.266 c-15.973,0-28.973-13.001-28.973-28.979v-2.828c0-15.978,13-28.979,28.973-28.979h279.897c15.973,0,28.973,13.001,28.973,28.979 V115.744z"></path>
+                      <path d="M171.144,422.863c7.218,0,13.069-5.853,13.069-13.068V262.641c0-7.216-5.852-13.07-13.069-13.07 c-7.217,0-13.069,5.854-13.069,13.07v147.154C158.074,417.012,163.926,422.863,171.144,422.863z"></path>
+                      <path d="M241.214,422.863c7.218,0,13.07-5.853,13.07-13.068V262.641c0-7.216-5.854-13.07-13.07-13.07 c-7.217,0-13.069,5.854-13.069,13.07v147.154C228.145,417.012,233.996,422.863,241.214,422.863z"></path>
+                      <path d="M311.284,422.863c7.217,0,13.068-5.853,13.068-13.068V262.641c0-7.216-5.852-13.07-13.068-13.07 c-7.219,0-13.07,5.854-13.07,13.07v147.154C298.213,417.012,304.067,422.863,311.284,422.863z"></path>
+                    </g>
+                  </g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                </svg>
+              </div>
+              <div class="step-title">Shipping Full Container Load - {{ i+1}} </div>
+          </div>
+          </label>
+        </div>
+        <div class="card-block">
+          <div class="looseCargoWrapper">
+            <div>
+              <div class="lclWrapper">
+                <div class="row loadUnit-row vcenter">
+                  <div class="col-sm-15" formArrayName="air">
+                    <div>
+                      <div formGroupName="{{i}}">
+                        <div class="load-unit no-gutter row">
+                          <div class="quantity-wrapper col-sm-5">
+                            <div>
+                              <label class="input-field-upper-label"> <span>Description of Air<a href="#"></a></span></label>
+                              <div class="form-group Select">
+                                <input type="text" class="form-control" placeholder="Description" formControlName="description" />
+                                <small [hidden]="air.controls.air.controls[i].controls.description.valid" class="text-danger">
+                                Description is required.
+                                </small>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div>
+                              <label class="input-field-upper-label"> <span>Package Type <a href="#"></a></span></label>
+                              <div class="form-group">
+                                <select class="form-control" id="package_type" formControlName="package_type">
+                                  <option>IBC TANKS(S)</option>
+                                  <option>BOXES</option>
+                                  <option>COLLI</option>
+                                  <option>CRATE</option>
+                                  <option>ROLLS</option>
+                                  <option>REELS</option>
+                                  <option>SKID(S)</option>
+                                  <option>PIECES(S)</option>
+                                  <option>PALLETS</option>
+                                  <option>PACKAGES(S)</option>
+                                  <option>COIL(S)</option>
+                                  <option>DRUMS</option>
+                                  <option>CASE(S)</option>
+                                  <option>CARTONS</option>
+                                  <option>CARBOY(S)</option>
+                                  <option>CAN(S)</option>
+                                  <option>CABLE DRUM(S)</option>
+                                  <option>BUNDLE(S)</option>
+                                  <option>BRIQUETTE(S)</option>
+                                  <option>BOX(S)</option>
+                                  <option>BOBBIN(S)</option>
+                                  <option>BOAT(S)</option>
+                                  <option>BLOCKS(S)</option>
+                                  <option>BARREL(S)</option>
+                                  <option>BALE(S)</option>
+                                  <option>BAILS</option>
+                                  <option>BAG(S)</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div>
+                              <label class="input-field-upper-label"> <span>Package Quantity<a href="#"></a></span></label>
+                              <div class="form-group Select">
+                                <input type="text" class="form-control" placeholder="Package Quantity" formControlName="package_quantity" />
+                                <small [hidden]="air.controls.air.controls[i].controls.package_quantity.valid" class="text-danger">
+                                Package Quantity is required.
+                                </small>
+                              </div>
+                            </div>
+                            <div class="weight-input-label"></div>
+                          </div>
+                          <div class="col-sm-1">
+                            <div class="load-totals-wrapper load-margin-top">
+                              <div class="unit">1 Unit</div>
+                              <div class="volume">0CBM</div>
+                              <div class="weight">0KG</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="load-unit no-gutter row">
+                          <div class="quantity-wrapper col-sm-3">
+                            <div>
+                              <label class="input-field-upper-label"> <span>Weight Unit <a href="#">Help</a></span></label>
+                              <div class="form-group">
+                                <select class="form-control" id="sel1" formControlName="weight_unit">
+                                  <option>1</option>
+                                  <option>2</option>
+                                  <option>3</option>
+                                  <option>4</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div>
+                              <label class="input-field-upper-label"> <span>Gross Weight <a href="#">Help</a></span></label>
+                              <div class="form-group Select">
+                                <input type="text" class="form-control" placeholder="Gross Weight" formControlName="gross_weight" />
+                                <small [hidden]="air.controls.air.controls[i].controls.gross_weight.valid" class="text-danger">
+                                Gross Weight is required.
+                                </small>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div>
+                              <label class="input-field-upper-label"> <span>Net Weight <a href="#">Help</a></span></label>
+                              <div class="form-group Select">
+                                <input type="text" class="form-control" placeholder="Net Weight" formControlName="net_weight" />
+                                <small [hidden]="air.controls.air.controls[i].controls.net_weight.valid" class="text-danger">
+                                Net Weight is required.
+                                </small>
+                              </div>
+                            </div>
+                            <div class="weight-input-label"></div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div>
+                              <label class="input-field-upper-label"> <span>CBM <a href="#">Don’t know them?</a></span></label>
+                              <div class="form-group Select">
+                                <input type="text" class="form-control" placeholder="CBM" formControlName="cbm" />
+                                <small [hidden]="air.controls.air.controls[i].controls.cbm.valid" class="text-danger">
+                                CBM is required.
+                                </small>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="load-remove-wizard load-margin-top col-sm-1"></div>
+                </div>
+                <div>
+                  <hr style="border-width: 1px 0px 0px; border-top-style: solid; border-right-style: initial; border-bottom-style: initial; border-left-style: initial; border-top-color: rgb(197, 217, 232); border-right-color: initial; border-bottom-color: initial; border-left-color: initial; border-image: initial; margin: 10px -16px; padding: 0px;">
+                </div>
+                <div class="vcenter add-load row">
+                  <div class="col-sm-9" (click)="addAir()" style="cursor: pointer;"><span class="icon icon-circle-add"></span><a>Add another unit</a></div>
+                  <div class="shipment-lcl-total-label-ld col-sm-3">Shipment total:</div>
+                  <div class="col-sm-3"><span class="load-summary">1 Unit, 0 CBM, 0 KG</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button label="Button" type="button" class="next-step-button btn btn-primary"><span><span class="bold">NEXT STEP</span></span>
+  </button>
+  </div>
+  </form>
+  <form *ngIf="shipmentType === 'land_ftl'" [formGroup]="land_ftl">
+  <div id="loads" class="multiple">
+    <div class="tabs">
+      <div class="tab-items" style="padding-left: 0px;">
+        <div class="tab-wrapper">
+        </div>
+        <div class="tab-wrapper">
+        </div>
+        <em class="tab-highlighter" style="width: 236px; margin-left: 0px;"></em>
+      </div>
+      <div class="tabs-content" *ngFor="let school of land_ftl.controls['land_ftl'].controls; let i=index">
+        <div class="card step-card">
+          <div class="card-header">
+            <label class="card-title-label">
+              <div>
+                <div class="step-number">1</div>
+                <div class="step-title main-icon" *ngIf="land_ftl.controls['land_ftl'].controls.length > 1" (click)="removeLandFTL(i)" data-type="svg">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 482.428 482.429" style="enable-background:new 0 0 482.428 482.429;" xml:space="preserve">
+                  <g>
+                    <g>
+                      <path d="M381.163,57.799h-75.094C302.323,25.316,274.686,0,241.214,0c-33.471,0-61.104,25.315-64.85,57.799h-75.098 c-30.39,0-55.111,24.728-55.111,55.117v2.828c0,23.223,14.46,43.1,34.83,51.199v260.369c0,30.39,24.724,55.117,55.112,55.117 h210.236c30.389,0,55.111-24.729,55.111-55.117V166.944c20.369-8.1,34.83-27.977,34.83-51.199v-2.828 C436.274,82.527,411.551,57.799,381.163,57.799z M241.214,26.139c19.037,0,34.927,13.645,38.443,31.66h-76.879 C206.293,39.783,222.184,26.139,241.214,26.139z M375.305,427.312c0,15.978-13,28.979-28.973,28.979H136.096 c-15.973,0-28.973-13.002-28.973-28.979V170.861h268.182V427.312z M410.135,115.744c0,15.978-13,28.979-28.973,28.979H101.266 c-15.973,0-28.973-13.001-28.973-28.979v-2.828c0-15.978,13-28.979,28.973-28.979h279.897c15.973,0,28.973,13.001,28.973,28.979 V115.744z"></path>
+                      <path d="M171.144,422.863c7.218,0,13.069-5.853,13.069-13.068V262.641c0-7.216-5.852-13.07-13.069-13.07 c-7.217,0-13.069,5.854-13.069,13.07v147.154C158.074,417.012,163.926,422.863,171.144,422.863z"></path>
+                      <path d="M241.214,422.863c7.218,0,13.07-5.853,13.07-13.068V262.641c0-7.216-5.854-13.07-13.07-13.07 c-7.217,0-13.069,5.854-13.069,13.07v147.154C228.145,417.012,233.996,422.863,241.214,422.863z"></path>
+                      <path d="M311.284,422.863c7.217,0,13.068-5.853,13.068-13.068V262.641c0-7.216-5.852-13.07-13.068-13.07 c-7.219,0-13.07,5.854-13.07,13.07v147.154C298.213,417.012,304.067,422.863,311.284,422.863z"></path>
+                    </g>
+                  </g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                  <g></g>
+                </svg>
+              </div>
+              <div class="step-title">Shipping Full Container Load - {{ i+1}} </div>
+          </div>
+          </label>
+        </div>
+        <div class="card-block">
+          <div class="looseCargoWrapper">
+            <div>
+              <div class="lclWrapper">
+                <div class="row loadUnit-row vcenter">
+                  <div class="col-sm-15" formArrayName="land_ftl">
+                    <div>
+                      <div formGroupName="{{i}}">
+                        <div class="load-unit no-gutter row">
+                          <div class="quantity-wrapper col-sm-5">
+                            <div>
+                              <label class="input-field-upper-label"> <span>Description of Land FTL<a href="#"></a></span></label>
+                              <div class="form-group Select">
+                                <input type="text" class="form-control" placeholder="Description" formControlName="description" />
+                                <small [hidden]="land_ftl.controls.land_ftl.controls[i].controls.description.valid" class="text-danger">
+                                Description is required.
+                                </small>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div>
+                              <label class="input-field-upper-label"> <span>Package Type <a href="#"></a></span></label>
+                              <div class="form-group">
+                                <select class="form-control" id="package_type" formControlName="package_type">
+                                  <option>IBC TANKS(S)</option>
+                                  <option>BOXES</option>
+                                  <option>COLLI</option>
+                                  <option>CRATE</option>
+                                  <option>ROLLS</option>
+                                  <option>REELS</option>
+                                  <option>SKID(S)</option>
+                                  <option>PIECES(S)</option>
+                                  <option>PALLETS</option>
+                                  <option>PACKAGES(S)</option>
+                                  <option>COIL(S)</option>
+                                  <option>DRUMS</option>
+                                  <option>CASE(S)</option>
+                                  <option>CARTONS</option>
+                                  <option>CARBOY(S)</option>
+                                  <option>CAN(S)</option>
+                                  <option>CABLE DRUM(S)</option>
+                                  <option>BUNDLE(S)</option>
+                                  <option>BRIQUETTE(S)</option>
+                                  <option>BOX(S)</option>
+                                  <option>BOBBIN(S)</option>
+                                  <option>BOAT(S)</option>
+                                  <option>BLOCKS(S)</option>
+                                  <option>BARREL(S)</option>
+                                  <option>BALE(S)</option>
+                                  <option>BAILS</option>
+                                  <option>BAG(S)</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div>
+                              <label class="input-field-upper-label"> <span>Package Quantity<a href="#"></a></span></label>
+                              <div class="form-group Select">
+                                <input type="text" class="form-control" placeholder="Container Count" formControlName="package_quantity" />
+                                <small [hidden]="land_ftl.controls.land_ftl.controls[i].controls.package_quantity.valid" class="text-danger">
+                                Package Quantity is required.
+                                </small>
+                              </div>
+                            </div>
+                            <div class="weight-input-label"></div>
+                          </div>
+                          <div class="col-sm-1">
+                            <div class="load-totals-wrapper load-margin-top">
+                              <div class="unit">1 Unit</div>
+                              <div class="volume">0CBM</div>
+                              <div class="weight">0KG</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="load-unit no-gutter row">
+                          <div class="quantity-wrapper col-sm-3">
+                            <div>
+                              <label class="input-field-upper-label"> <span>Weight Unit <a href="#">Help</a></span></label>
+                              <div class="form-group">
+                                <select class="form-control" id="sel1" formControlName="weight_unit">
+                                  <option>KG</option>
+                                  <option>LB</option>
+                                  <option>TON</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div>
+                              <label class="input-field-upper-label"> <span>Gross Weight <a href="#">Help</a></span></label>
+                              <div class="form-group Select">
+                                <input type="text" class="form-control" placeholder="Gross Weight" formControlName="gross_weight" />
+                                <small [hidden]="land_ftl.controls.land_ftl.controls[i].controls.gross_weight.valid" class="text-danger">
+                                Gross Weight is required.
+                                </small>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="form-group">
+                              <select class="form-control" id="package_type" formControlName="vehicle_type">
+                                <option>TRAILER 40FT</option>
+                                <option>TRAILER 20FT</option>
+                                <option>40FT</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="load-remove-wizard load-margin-top col-sm-1"></div>
+                </div>
+                <div>
+                  <hr style="border-width: 1px 0px 0px; border-top-style: solid; border-right-style: initial; border-bottom-style: initial; border-left-style: initial; border-top-color: rgb(197, 217, 232); border-right-color: initial; border-bottom-color: initial; border-left-color: initial; border-image: initial; margin: 10px -16px; padding: 0px;">
+                </div>
+                <div class="vcenter add-load row">
+                  <div class="col-sm-9" (click)="addLandFTL()" style="cursor: pointer;"><span class="icon icon-circle-add"></span><a>Add another unit</a></div>
+                  <div class="shipment-lcl-total-label-ld col-sm-3">Shipment total:</div>
+                  <div class="col-sm-3"><span class="load-summary">1 Unit, 0 CBM, 0 KG</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button label="Button" type="button" class="next-step-button btn btn-primary"><span><span class="bold">NEXT STEP</span></span>
+  </button>
+  </div>
+  </form>
+  <form *ngIf="shipmentType === 'land_ltl'" [formGroup]="land_ltl">
+  <div id="loads" class="multiple">
+    <div class="tabs">
+      <div class="tab-items" style="padding-left: 0px;">
+        <div class="tab-wrapper">
+        </div>
+        <div class="tab-wrapper">
+        </div>
+        <em class="tab-highlighter" style="width: 236px; margin-left: 0px;"></em>
+      </div>
+      <div class="tabs-content" *ngFor="let school of land_ltl.controls['land_ltl'].controls; let i=index">
+        <div class="card step-card">
+          <div class="card-header">
+            <label class="card-title-label">
+              <div class="step-number">1</div>
+              <div class="step-title main-icon" *ngIf="land_ltl.controls['land_ltl'].controls.length > 1" (click)="removeLandLTL(i)" data-type="svg">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 482.428 482.429" style="enable-background:new 0 0 482.428 482.429;" xml:space="preserve">
+                <g>
+                  <g>
+                    <path d="M381.163,57.799h-75.094C302.323,25.316,274.686,0,241.214,0c-33.471,0-61.104,25.315-64.85,57.799h-75.098 c-30.39,0-55.111,24.728-55.111,55.117v2.828c0,23.223,14.46,43.1,34.83,51.199v260.369c0,30.39,24.724,55.117,55.112,55.117 h210.236c30.389,0,55.111-24.729,55.111-55.117V166.944c20.369-8.1,34.83-27.977,34.83-51.199v-2.828 C436.274,82.527,411.551,57.799,381.163,57.799z M241.214,26.139c19.037,0,34.927,13.645,38.443,31.66h-76.879 C206.293,39.783,222.184,26.139,241.214,26.139z M375.305,427.312c0,15.978-13,28.979-28.973,28.979H136.096 c-15.973,0-28.973-13.002-28.973-28.979V170.861h268.182V427.312z M410.135,115.744c0,15.978-13,28.979-28.973,28.979H101.266 c-15.973,0-28.973-13.001-28.973-28.979v-2.828c0-15.978,13-28.979,28.973-28.979h279.897c15.973,0,28.973,13.001,28.973,28.979 V115.744z"></path>
+                    <path d="M171.144,422.863c7.218,0,13.069-5.853,13.069-13.068V262.641c0-7.216-5.852-13.07-13.069-13.07 c-7.217,0-13.069,5.854-13.069,13.07v147.154C158.074,417.012,163.926,422.863,171.144,422.863z"></path>
+                    <path d="M241.214,422.863c7.218,0,13.07-5.853,13.07-13.068V262.641c0-7.216-5.854-13.07-13.07-13.07 c-7.217,0-13.069,5.854-13.069,13.07v147.154C228.145,417.012,233.996,422.863,241.214,422.863z"></path>
+                    <path d="M311.284,422.863c7.217,0,13.068-5.853,13.068-13.068V262.641c0-7.216-5.852-13.07-13.068-13.07 c-7.219,0-13.07,5.854-13.07,13.07v147.154C298.213,417.012,304.067,422.863,311.284,422.863z"></path>
+                  </g>
+                </g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+              </svg>
+              <div class="step-title">Shipping Full Container Load - {{ i+1}} </div>
+          </div>
+          </label>
+        </div>
+        <div class="card-block">
+          <div class="looseCargoWrapper">
+            <div>
+              <div class="lclWrapper">
+                <div class="row loadUnit-row vcenter">
+                  <div class="col-sm-15" formArrayName="land_ltl">
+                    <div>
+                      <div formGroupName="{{i}}">
+                        <div class="load-unit no-gutter row">
+                          <div class="quantity-wrapper col-sm-5">
+                            <div>
+                              <label class="input-field-upper-label"> <span>Description of Land LTL<a href="#"></a></span></label>
+                              <div class="form-group Select">
+                                <input type="text" class="form-control" placeholder="Description" formControlName="description" />
+                                <small [hidden]="land_ltl.controls.land_ltl.controls[i].controls.description.valid" class="text-danger">
+                                Description is required.
+                                </small>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div>
+                              <label class="input-field-upper-label"> <span>Package Type <a href="#"></a></span></label>
+                              <div class="form-group">
+                                <select class="form-control" id="package_type" formControlName="package_type">
+                                  <option>IBC TANKS(S)</option>
+                                  <option>BOXES</option>
+                                  <option>COLLI</option>
+                                  <option>CRATE</option>
+                                  <option>ROLLS</option>
+                                  <option>REELS</option>
+                                  <option>SKID(S)</option>
+                                  <option>PIECES(S)</option>
+                                  <option>PALLETS</option>
+                                  <option>PACKAGES(S)</option>
+                                  <option>COIL(S)</option>
+                                  <option>DRUMS</option>
+                                  <option>CASE(S)</option>
+                                  <option>CARTONS</option>
+                                  <option>CARBOY(S)</option>
+                                  <option>CAN(S)</option>
+                                  <option>CABLE DRUM(S)</option>
+                                  <option>BUNDLE(S)</option>
+                                  <option>BRIQUETTE(S)</option>
+                                  <option>BOX(S)</option>
+                                  <option>BOBBIN(S)</option>
+                                  <option>BOAT(S)</option>
+                                  <option>BLOCKS(S)</option>
+                                  <option>BARREL(S)</option>
+                                  <option>BALE(S)</option>
+                                  <option>BAILS</option>
+                                  <option>BAG(S)</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div>
+                              <label class="input-field-upper-label"> <span>Package Quantity<a href="#"></a></span></label>
+                              <div class="form-group Select">
+                                <input type="text" class="form-control" placeholder="Container Count" formControlName="package_quantity" />
+                                <small [hidden]="land_ltl.controls.land_ltl.controls[i].controls.package_quantity.valid" class="text-danger">
+                                Container Count is required.
+                                </small>
+                              </div>
+                            </div>
+                            <div class="weight-input-label"></div>
+                          </div>
+                          <div class="col-sm-1">
+                            <div class="load-totals-wrapper load-margin-top">
+                              <div class="unit">1 Unit</div>
+                              <div class="volume">0CBM</div>
+                              <div class="weight">0KG</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="load-unit no-gutter row">
+                          <div class="quantity-wrapper col-sm-3">
+                            <div>
+                              <label class="input-field-upper-label"> <span>Weight Unit <a href="#">Help</a></span></label>
+                              <div class="form-group">
+                                <select class="form-control" id="sel1" formControlName="weight_unit">
+                                  <option>1</option>
+                                  <option>2</option>
+                                  <option>3</option>
+                                  <option>4</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div>
+                              <label class="input-field-upper-label"> <span>Gross Weight <a href="#">Help</a></span></label>
+                              <div class="form-group Select">
+                                <input type="text" class="form-control" placeholder="Gross Weight" formControlName="gross_weight" />
+                                <small [hidden]="land_ltl.controls.land_ltl.controls[i].controls.gross_weight.valid" class="text-danger">
+                                Gross Weight is required.
+                                </small>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="load-remove-wizard load-margin-top col-sm-1"></div>
+                </div>
+                <div>
+                  <hr style="border-width: 1px 0px 0px; border-top-style: solid; border-right-style: initial; border-bottom-style: initial; border-left-style: initial; border-top-color: rgb(197, 217, 232); border-right-color: initial; border-bottom-color: initial; border-left-color: initial; border-image: initial; margin: 10px -16px; padding: 0px;">
+                </div>
+                <div class="vcenter add-load row">
+                  <div class="col-sm-9" (click)="addLandLTL()" style="cursor: pointer;"><span class="icon icon-circle-add"></span><a>Add another unit</a></div>
+                  <div class="shipment-lcl-total-label-ld col-sm-3">Shipment total:</div>
+                  <div class="col-sm-3"><span class="load-summary">1 Unit, 0 CBM, 0 KG</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button label="Button" type="button" class="next-step-button btn btn-primary"><span><span class="bold">NEXT STEP</span></span>
+  </button>
+  </div>
+  </form>
+  <div id="route" class="routes-wrapper" *ngIf="secondStep === false">
+    <div class="card customs-card step-card is-hidden">
+      <div class="card-header">
+        <label class="card-title-label">
+          <div>
+            <div class="step-number">2</div>
+            <div class="step-title">Pickup and Delivery</div>
+          </div>
+        </label>
+        <div class="card-header-children"></div>
+      </div>
+      <div class="card-block"></div>
+    </div>
+  </div>
+  <form [formGroup]="details" *ngIf="secondStep === true">
+  <div class="type-and-details-container">
+    <div class="row">
+      <div class="col-sm-11">
+        <div class="card origin-wrapper step-card">
+          <div class="card-header">
+            <label class="card-title-label">
+              <div>
+                <div class="step-number">2</div>
+                <div class="step-title">Pickup Goods From  </div>
+              </div>
+            </label>
+            <div class="card-header-children"></div>
+          </div>
+          <div class="card-block">
+            <div class="no-gutter row">
+              <div class="quantity-wrapper col-sm-5" formGroupName="origin">
+                <div>
+                  <label class="input-field-upper-label"> <span>Location Type <a href="#"></a></span></label>
+                  <div class="form-group">
+                    <select class="form-control" id="location_type" formControlName="location_type">
+                      <option>Residential</option>
+                      <option>Buisness (Needs Lift Gate)</option>
+                      <option>Buisness</option>
+                      <option>Port / Airport</option>
+                      <option>Factory / Warehoue</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3" formGroupName="origin">
+                <div>
+                  <label class="input-field-upper-label"> <span>Handle Warehouse Charges? <a href="#"></a></span></label>
+                  <div class="form-group">
+                    <label class="checkbox-inline">
+                    <input type="checkbox" class="m-10" formControlName="handle_warehouse" value="">Handle</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3" formGroupName="origin">
+                <div>
+                  <label class="input-field-upper-label"> <span>Handle Port Charges? <a href="#"></a></span></label>
+                  <div class="form-group">
+                    <label class="checkbox-inline">
+                    <input type="checkbox" class="m-10" formControlName="handle_port_charges" value="">Handle</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3" formGroupName="origin">
+                <div>
+                  <label class="input-field-upper-label"> <span>Handle Customs Charges? <a href="#"></a></span></label>
+                  <div class="form-group">
+                    <label class="checkbox-inline">
+                    <input type="checkbox" class="m-10" formControlName="handle_customs" value="">Handle</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="blank-port-charges-adjustments"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4" style="width: 29.1%;">
+        <div class="card pickupdate-card">
+          <div class="card-header" style="height: 22px;">
+            <label class="card-title-label">Goods ready (Estimated)</label>
+            <div class="card-header-children"></div>
+          </div>
+          <div class="card-block">
+            <div>
+              <label class="input-field-upper-label"> Goods ready (estimated)</label>
+              <div>
+                <div type="text" locale="en_US" blockedweekdays="6,7" name="origin.pickupDate" class="DatePicker left-pulling form-group">
+                  <div class="SingleDatePicker">
+                    <div>
+                      <div class="SingleDatePickerInput">
+                        <button type="button" class="SingleDatePickerInput__calendar-icon"><span class="icon icon-calendar"></span></button>
+                        <div class="DateInput DateInput--open-down">
+                          <input aria-label="Select date" class="DateInput__input needsclick" type="text" id="a1ybgg" name="a1ybgg" placeholder="Select date" autocomplete="off" aria-describedby="DateInput__screen-reader-message-a1ybgg" value="">
+                          <p id="DateInput__screen-reader-message-a1ybgg" class="screen-reader-only">Press the down arrow key to interact with the calendar and
+                            select a date. Press the question mark key to get the keyboard shortcuts for changing dates.
+                          </p>
+                          <div class="DateInput__display-text">Select date</div>
+                        </div>
+                        <button type="button" class="SingleDatePickerInput__clear-date SingleDatePickerInput__clear-date--hide" aria-label="Clear Date">
+                          <div class="DateRangePickerInput__close">
+                            <svg viewBox="0 0 12 12">
+                              <path fill-rule="evenodd" d="M11.53.47a.75.75 0 0 0-1.061 0l-4.47 4.47L1.529.47A.75.75 0 1 0 .468 1.531l4.47 4.47-4.47 4.47a.75.75 0 1 0 1.061 1.061l4.47-4.47 4.47 4.47a.75.75 0 1 0 1.061-1.061l-4.47-4.47 4.47-4.47a.75.75 0 0 0 0-1.061z"></path>
+                            </svg>
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="line-animator"></div>
+                </div>
+              </div>
+              <div class="pickupdate-help-link"><a href="#" tabindex="-1">Don't know the date yet?</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="routes" class="routes-wrapper">
+    <div class="tabs">
+      <div class="tab-items" style="padding-left: 0px;">
+        <div class="tab-wrapper">
+        </div>
+        <div class="tab-wrapper">
+        </div>
+        <em class="tab-highlighter" style="width: 236px; margin-left: 0px;"></em>
+      </div>
+      <div class="tabs-content">
+        <div class="card step-card">
+          <div class="card-header">
+            <label class="card-title-label">
+              <div>
+                <div class="step-number">2</div>
+                <div class="step-title">Deliver Goods To</div>
+              </div>
+            </label>
+          </div>
+          <div class="card-block">
+            <div class="looseCargoWrapper">
+              <div>
+                <div class="lclWrapper">
+                  <div class="row loadUnit-row vcenter">
+                    <div class="col-sm-15">
+                      <div>
+                        <div>
+                          <div class="load-unit no-gutter row">
+                            <div class="quantity-wrapper col-sm-3" formGroupName="origin">
+                              <div>
+                                <label class="input-field-upper-label"> <span>Location Type <a href="#"></a></span></label>
+                                <div class="form-group">
+                                  <select class="form-control" id="location_type_deliver" formControlName="location_type">
+                                    <option>Residential</option>
+                                    <option>Buisness (Needs Lift Gate)</option>
+                                    <option>Buisness</option>
+                                    <option>Port / Airport</option>
+                                    <option>Factory / Warehoue</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-4" formGroupName="origin">
+                              <div>
+                                <label class="input-field-upper-label"> <span>Warehouse <a href="#"></a></span></label>
+                                <div class="form-group">
+                                  <label class="checkbox-inline">
+                                  <input type="checkbox" class="m-10" formControlName="handle_warehouse" value="">Handle Warehoue</label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-4" formGroupName="origin">
+                              <div>
+                                <label class="input-field-upper-label"> <span>Port Charges <a href="#"></a></span></label>
+                                <div class="form-group">
+                                  <label class="checkbox-inline">
+                                  <input type="checkbox" class="m-10" formControlName="handle_port_charges" value="">Handle Port Charges</label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-4" formGroupName="origin">
+                              <div>
+                                <label class="input-field-upper-label"> <span>Customs <a href="#"></a></span></label>
+                                <div class="form-group">
+                                  <label class="checkbox-inline">
+                                  <input type="checkbox" class="m-10" formControlName="handle_customs" value="">Handle Customs</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button label="Button" (click)="nextStep('three')" type="button" class="next-step-button btn btn-primary"><span><span class="bold">NEXT STEP</span></span>
+    </button>
+  </div>
+  <div id="customsAndOthers" class="customs-and-others" *ngIf="thirdStep === false">
+    <div class="card customs-card step-card is-hidden">
+      <div class="card-header">
+        <label class="card-title-label">
+          <div>
+            <div class="step-number">3</div>
+            <div class="step-title">Additional Details</div>
+          </div>
+        </label>
+        <div class="card-header-children"></div>
+      </div>
+      <div class="card-block"></div>
+    </div>
+  </div>
+  <div class="card step-card additional-card" *ngIf="thirdStep === true">
+    <div class="card-header">
+      <label class="card-title-label">
+        <div>
+          <div class="step-number">3</div>
+          <div class="step-title">Additional Details</div>
+        </div>
+      </label>
+      <div class="card-header-children"></div>
+    </div>
+    <div class="card-block">
+      <div class="row">
+        <div class="left">
+          <div class="additional-details-member">
+            <div formGroupName="additional_details">
+              <label class="input-field-upper-label"> <span>Is Hazardous <a href="#"></a></span></label>
+              <div class="form-group">
+                <label class="control-label">
+                <input type="checkbox" class="m-10" formControlName="is_hazardous" value="">Is Hazardous</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="additional-details-member">
+            <div formGroupName="additional_details">
+              <label class="input-field-upper-label"> <span>Need Refrigeration <a href="#"></a></span></label>
+              <div class="form-group">
+                <label class="control-label">
+                <input type="checkbox" class="m-10" formControlName="need_refrigeration" value="">Need Refrigeration </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="left">
+          <div class="additional-details-member">
+            <div formGroupName="additional_details">
+              <label class="input-field-upper-label"> <span>Need Insurance <a href="#"></a></span></label>
+              <div class="form-group">
+                <label class="control-label">
+                <input type="checkbox" class="m-10" formControlName="need_insurance" value="">Need Insurance</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="submit_section">
+    <a class="main_button btn btn-primary" href="#login-modal"><i class="fas fa-external-link-alt"></i>Submit</a>
+    <!-- <button type="submit" data-target="#open-modal" label="Button" class="main_button btn btn-primary">SEARCH &amp; BOOK</button> -->
+    <div class="load_summary"><span>Total:</span> <span>1 Unit, 0 CBM, 0 KG</span></div>
+  </div>
+  </form>
+  <div id="login-modal" class="modal-window">
+    <a href="#" title="Close" class="modal-close">Close</a>
+    <div id="wrapper">
+      <div id="subscribeBox">
+        <h2><span class="thin">LOGIN TO</span> ONDOTFREIGHT</h2>
+        <p class="font">Please fill out the following information to receive our quotation.</p>
+        <form class="subscribeForm" name="Subscription Form" method="post" action="mailto:helen.burgess@central.wa.edu.au" enctype="text/plain">
+          <input class="modal-input" id="email" type="email" [(ngModel)]="email" placeholder="Email" name="Email" required>
+          <input class="modal-input" id="password" type="password" [(ngModel)]="email" placeholder="Password" name="Password" required>
+          <div class="row">
+            <div class="col-sm-6"><input class="modal-input modal-submit" id="submit" (click)="login()" type="submit" value="Send"></div>
+            <div class="col-sm-6">
+              <a href="#open-modal-sign-up">
+              <input class="modal-input modal-submit" id="sign-up" value="Sign Up"></a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div id="open-modal-sign-up" class="modal-window-sign-up">
+    <a href="#" title="Close" class="modal-close">Close</a>
+    <div id="wrapper">
+      <div id="subscribeBox">
+        <h2><span class="thin">SIGNIN TO</span> ONDOTFREIGHT</h2>
+        <p class="font">Please fill out the following information to receive our quotation.</p>
+        <form class="subscribeForm" name="Subscription Form" method="post" action="mailto:helen.burgess@central.wa.edu.au" enctype="text/plain">
+          <input class="modal-input" id="name" type="name" [(ngModel)]="name" placeholder="Name" name="Name" required>
+          <input class="modal-input" id="organisation_name" type="organisation_name" [(ngModel)]="organisation_name" placeholder="Organisation Name" name="Organisation Name" required>
+          <input class="modal-input" id="signup-email" type="email" [(ngModel)]="signup-email" placeholder="Email" name="Email" required>
+          <input class="modal-input" id="signup-password" type="password" [(ngModel)]="signup-password" placeholder="Password" name="Password" required>
+          <div class="row">
+            <div class="col-sm-6"><input class="modal-input modal-submit" id="signup-submit" (click)="login()" type="submit" value="Send"></div>
+            <div class="col-sm-6">
+              <a href="#login-modal">
+              <input class="modal-input modal-submit" id="" value="Sign In"></a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+  
